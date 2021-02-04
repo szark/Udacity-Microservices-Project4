@@ -1,4 +1,4 @@
-[![szark](https://app.circleci.com/pipelines/github/szark/Udacity-Microservices-Project4.svg?style=svg)](https://app.circleci.com/pipelines/github/szark/Udacity-Microservices-Project4)
+[![CircleCI](https://app.circleci.com/pipelines/github/szark/Udacity-Microservices-Project4.svg?style=svg)](https://app.circleci.com/pipelines/github/szark/Udacity-Microservices-Project4)
 
 ## Project Overview
 
