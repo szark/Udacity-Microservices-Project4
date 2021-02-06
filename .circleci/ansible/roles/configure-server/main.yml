@@ -1,0 +1,54 @@
+---
+
+- name: "update apt packages."
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: "upgrade packages"
+  become: yes
+  apt:
+    upgrade: yes
+
+- name: remove dependencies that are no longer required
+  become: yes
+  apt:
+    autoremove: yes
+
+- name: Install the gpg key for nodejs LTS
+  become: yes
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: Add apt repo
+  become: yes
+  apt_repository: 
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: "install dependencies."
+  become: yes
+  apt:
+    name: ["docker-ce", "docker-ce-cli", "containerd.io"]
+    state: latest
+    update_cache: yes
+
+- name: Install minikube
+  become: yes
+  apt:
+    deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+
+- name: Copy kubectl
+  become: yes
+  copy:
+    src: /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl 
+    dest: /usr/bin/kubernetes
+
+- name: Start minikube
+  become_user: ubuntu
+  become: yes
+    shell: |
+      minikube start
+
+
