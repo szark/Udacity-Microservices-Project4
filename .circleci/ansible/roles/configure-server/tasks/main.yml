@@ -15,19 +15,19 @@
   apt:
     autoremove: yes
 
-- name: Install the gpg key for nodejs LTS
+- name: Install the gpg key for docker
   become: yes
   apt_key:
     url: "https://download.docker.com/linux/ubuntu/gpg"
     state: present
 
-- name: Add apt repo
+- name: Add apt repo for docker
   become: yes
   apt_repository: 
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
     state: present
 
-- name: "install dependencies."
+- name: "install dependencies (docker, containerd)"
   become: yes
   apt:
     name: ["docker-ce", "docker-ce-cli", "containerd.io"]
@@ -44,11 +44,10 @@
   copy:
     src: /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl 
     dest: /usr/bin/kubernetes
+  delegate_to: localhost
 
 - name: Start minikube
   become_user: ubuntu
   become: yes
   shell: |
     minikube start
-
-
