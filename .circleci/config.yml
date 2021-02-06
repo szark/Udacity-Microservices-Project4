@@ -129,13 +129,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible && && apk add openssh && apk add tar
+            apk add --update ansible && apk add openssh && apk add tar
       - run:
-          name: Deploy backend
+          name: Deploy app
           command: |
             cd ..
             tar -cvf project.tar project
-            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-scripts.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-scripts.yml
       - run:
           name: Install dependencies for rollback
           when: on_fail
