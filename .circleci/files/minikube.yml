@@ -1,10 +1,5 @@
 Description: >
-  UdaPeople backend stack.
-
-Parameters:
-  ID:
-    Description: Unique identifier.
-    Type: String
+  Minikube
 
 Resources:
   InstanceSecurityGroup:
