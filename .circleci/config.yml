@@ -100,15 +100,17 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible 
-            apk add --update python3
-            apk add --update py3-pip
-            pip3 install awscli
       - run:
           name: Configure server
           command: |
             # Your code here
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
           no_output_timeout: 30m
+      - run:
+          name: Install dependencies for rollback
+          when: on_fail
+          command: |
+            apk add --install py3-pip && pip3 install --upgrade pip && pip3 install awscli
       #- destroy-environment    
 
   deploy-scripts:
