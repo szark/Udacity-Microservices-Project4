@@ -46,11 +46,16 @@
   apt:
     deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 
+- name: Get kubectl
+  become: yes
+  get_url:
+    url: https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl
+    dest: /tmp/kubectl
+    mode: 0755
+
 - name: Download kubectl
   become: yes
   shell: |
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    chmod 755 kubectl
     cp kubectl /usr/bin/kubectl
 
 - name: Reset connection
