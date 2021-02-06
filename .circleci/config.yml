@@ -109,3 +109,12 @@ jobs:
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
           no_output_timeout: 30m
       - destroy-environment    
+
+workflow:
+  default:
+    jobs:
+      - build
+      - deploy-infrastructure:
+          requires: [build]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
