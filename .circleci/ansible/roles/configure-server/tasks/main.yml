@@ -39,10 +39,10 @@
   apt:
     deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 
-- name: Copy kubectl
-  become: yes
-  shell: |
-    cp /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl /usr/bin/kubernetes
+#- name: Copy kubectl
+#  become: yes
+#  shell: |
+#    cp /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl /usr/bin/kubectl
 
 - name: Start minikube
   become_user: ubuntu
