@@ -116,7 +116,7 @@ jobs:
 
   deploy-scripts:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: alpine:latest
     steps:
       - checkout
       - restore_cache:
@@ -129,7 +129,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apk add --update ansible && && apk add openssh && apk add tar
       - run:
           name: Deploy backend
           command: |
