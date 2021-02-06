@@ -70,7 +70,7 @@ jobs:
             --output text >> ~/project/.circleci/ansible/inventory.txt
 
             cat ~/project/.circleci/ansible/inventory.txt
-            minikubeip=`cat ~/project/.circleci/ansible/inventory.txt | grep -v web`
+            minikubeip=`cat ~/project/.circleci/ansible/inventory.txt | grep -v minikube`
             echo "Minikube IP is $minikubeip"
             curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "$minikubeip" https://api.memstash.io/values/minikubeip
 
@@ -105,9 +105,38 @@ jobs:
           name: Configure server
           command: |
             # Your code here
-            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
           no_output_timeout: 30m
-      #- destroy-environment    
+      - destroy-environment    
+
+  deploy-scripts:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - restore_cache:
+          keys: 
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+      - add_ssh_keys:
+          fingerprints: ["b2:e2:f2:c3:61:4d:1f:50:7d:7c:44:54:98:cf:32:b8"]
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible
+      - run:
+          name: Deploy backend
+          command: |
+            cd ..
+            tar -cvf project.tar project
+            ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-scripts.yml
+      - run:
+          name: Install dependencies for rollback
+          when: on_fail
+          command: |
+            apk add --install py3-pip && pip3 install --upgrade pip && pip3 install awscli
+      # - destroy-environment
 
 workflows:
   default:
@@ -117,3 +146,5 @@ workflows:
           requires: [build-code]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+      - deploy-scripts:
+          requires: [configure-infrastructure]

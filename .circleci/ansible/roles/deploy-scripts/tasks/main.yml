@@ -1,0 +1,36 @@
+---
+- name: Creates web directory
+  become_user: ubuntu
+  become: yes
+  file:
+    path: /home/ubuntu/app
+    state: directory
+
+#- name: Copy files
+#  become_user: ubuntu
+#  become: yes 
+#  copy: 
+#    src: ~/project/backend.tar
+#    dest: /home/ubuntu/web
+
+- name: Unarchive
+  become_user: ubuntu
+  become: yes 
+  unarchive: 
+    src: ~/project.tar
+    dest: /home/ubuntu/app
+
+- name: Build docker
+  become_user: ubuntu
+  shell: |
+    bash /home/ubuntu/app/run_docker.sh
+
+- name: Upload docker
+  become_user: ubuntu
+  shell: |
+    bash /home/ubuntu/app/upload_docker.sh
+
+- name: Run kubernetes
+  become_user: ubuntu
+  shell: |
+    bash /home/ubuntu/app/run_kubernetes.sh
