@@ -110,7 +110,7 @@ jobs:
           no_output_timeout: 30m
       - destroy-environment    
 
-workflow:
+workflows:
   default:
     jobs:
       - build-code
