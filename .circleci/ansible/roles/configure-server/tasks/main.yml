@@ -34,15 +34,23 @@
     state: latest
     update_cache: yes
 
+- name: Add user to docker Group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
 - name: Install minikube
   become: yes
   apt:
     deb: https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 
-#- name: Copy kubectl
-#  become: yes
-#  shell: |
-#    cp /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl /usr/bin/kubectl
+- name: Download kubectl
+  become: yes
+  shell: |
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod 755 kubectl
+    cp kubectl /usr/bin/kubectl
 
 - name: Start minikube
   become_user: ubuntu
