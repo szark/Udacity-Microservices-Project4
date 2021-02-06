@@ -41,10 +41,8 @@
 
 - name: Copy kubectl
   become: yes
-  copy:
-    src: /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl 
-    dest: /usr/bin/kubernetes
-  delegate_to: localhost
+  shell: |
+    cp /var/lib/docker/volumes/minikube/_data/lib/minikube/binaries/v1.20.2/kubectl /usr/bin/kubernetes
 
 - name: Start minikube
   become_user: ubuntu
