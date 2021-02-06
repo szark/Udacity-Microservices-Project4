@@ -23,14 +23,14 @@
 - name: Build docker
   become_user: ubuntu
   shell: |
-    bash /home/ubuntu/app/run_docker.sh
+    bash /home/ubuntu/app/project/run_docker.sh
 
 - name: Upload docker
   become_user: ubuntu
   shell: |
-    bash /home/ubuntu/app/upload_docker.sh
+    bash /home/ubuntu/app/project/upload_docker.sh
 
 - name: Run kubernetes
   become_user: ubuntu
   shell: |
-    bash /home/ubuntu/app/run_kubernetes.sh
+    bash /home/ubuntu/app/project/run_kubernetes.sh

@@ -131,11 +131,16 @@ jobs:
           command: |
             apk add --update ansible && apk add openssh && apk add tar
       - run:
-          name: Deploy app
+          name: archive app files
           command: |
             cd ..
             tar -cvf project.tar project
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-scripts.yml
+            ls -al ~/
+      - run:
+          name: Deploy app
+          command: |
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook \
+            -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/deploy-scripts.yml
       - run:
           name: Install dependencies for rollback
           when: on_fail
