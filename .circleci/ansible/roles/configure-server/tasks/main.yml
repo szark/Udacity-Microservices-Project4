@@ -48,7 +48,7 @@
 - name: Start minikube
   become_user: ubuntu
   become: yes
-    shell: |
-      minikube start
+  shell: |
+    minikube start
 
 
