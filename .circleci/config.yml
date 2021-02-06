@@ -119,13 +119,13 @@ jobs:
       - image: alpine:latest
     steps:
       - checkout
-      - restore_cache:
-          keys: 
-          - v1-dependencies-{{ checksum "requirements.txt" }}
       - add_ssh_keys:
           fingerprints: ["b2:e2:f2:c3:61:4d:1f:50:7d:7c:44:54:98:cf:32:b8"]
       - attach_workspace:
           at: ~/
+      - restore_cache:
+          keys: 
+          - v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           name: Install dependencies
           command: |
