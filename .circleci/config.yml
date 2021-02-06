@@ -107,7 +107,7 @@ jobs:
             # Your code here
             ansible-playbook -i ~/project/.circleci/ansible/inventory.txt ~/project/.circleci/ansible/configure-server.yml
           no_output_timeout: 30m
-      - destroy-environment    
+      #- destroy-environment    
 
 workflows:
   default:
