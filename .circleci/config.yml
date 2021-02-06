@@ -115,6 +115,6 @@ workflow:
     jobs:
       - build-code
       - deploy-infrastructure:
-          requires: [build]
+          requires: [build-code]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
