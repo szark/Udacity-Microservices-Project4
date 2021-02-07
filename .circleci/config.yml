@@ -4,16 +4,6 @@
 #
 version: 2.1
 
-commands:
-  destroy-environment:
-    description: Destroy minikube
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail
-          command: |
-            aws cloudformation delete-stack --stack-name minikube 
-
 jobs:
   build:
     docker:

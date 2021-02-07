@@ -47,3 +47,18 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 1. Save password to variable `password=<your dockerpath repo password>`
 2. Upload image: `upload_docker.sh ${password}`
+
+### File description
+1. .circleci/config.yml - CircleCI job making install and lint check
+2. model_data/* - model files
+3. output_txt_files/docker_out.txt - output from app running on docker
+4. output_txt_files/kubernetes_out.txt - output from app running on kubernetes
+5. Dockerfile - dockerfile to build image
+6. Makefile - make file to run setup, install and lint
+7. app.py - main application file
+8. app_kube.yml - kubernetes deployment file
+9. make_prediction.sh - curl passing prediction input
+10. requirements.txt - necessary python libs
+11. run_docker.sh - run application on docker
+12. run_kubernetes - run application on kubernetes
+13. upload_docker.sh - upload image to docker hub
