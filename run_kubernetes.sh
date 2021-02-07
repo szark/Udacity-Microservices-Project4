@@ -16,8 +16,10 @@ envsubst < app_kube.yml | kubectl create -f -
 #kubectl create -f app_kube.yml
 # Step 3:
 # List kubernetes pods
-kubectl get pods -n udacity-ns
+kubectl get pods -n udacity-ns > output_txt_files/kubernetes_out.txt
 
 # Step 4:
 # Forward the container port to a host
-kubectl port-forward -n udacity-ns deployment/udacity 8080:80&
+until kubectl get pods -n udacity-ns | grep Running; do sleep 5; done
+kubectl get pods -n udacity-ns >> output_txt_files/kubernetes_out.txt
+kubectl port-forward -n udacity-ns deployment/udacity 8080:80

@@ -10,4 +10,4 @@ docker build --tag=api .
 docker image ls 
 # Step 3: 
 # Run flask app
-docker run -p 8080:80 api
+docker run -p 8080:80 api &

@@ -25,14 +25,16 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 
 ## Setup the Environment
 
+* Ensure python3.7 is installed
+* Install docker, hadolint and minikube
 * Create a virtualenv and activate it
 * Run `make install` to install the necessary dependencies
 
 ### Running `app.py`
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+1. Standalone: `python app.py` ==> to start as regular user port should be changed to 8080 in app.py
+2. Run in Docker:  `bash run_docker.sh`
+3. Run in Kubernetes:  `bash run_kubernetes.sh`
 
 ### Kubernetes Steps
 
@@ -40,3 +42,8 @@ You can find a detailed [project rubric, here](https://review.udacity.com/#!/rub
 * Setup and Configure Kubernetes locally
 * Create Flask app in Container
 * Run via kubectl
+
+### Upload image
+
+1. Save password to variable `password=<your dockerpath repo password>`
+2. Upload image: `upload_docker.sh ${password}`
